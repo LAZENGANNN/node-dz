@@ -1,0 +1,17 @@
+.a {
+  font-size: xxx-large;
+  text-decoration: none;
+  margin: 50px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.workDiv{
+  display: flex;
+  flex-direction: column;
+  margin:50px;
+  max-width: 700px;
+}

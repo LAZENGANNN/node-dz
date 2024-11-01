@@ -1,0 +1,14 @@
+.post{
+    border: 1px solid darkblue;
+    border-radius: 10px;
+}
+
+.a{
+    font-size: xxx-large;
+    text-decoration: none;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}

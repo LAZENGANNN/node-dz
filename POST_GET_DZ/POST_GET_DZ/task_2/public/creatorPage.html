@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>create</title>
+  </head>
+  <body>
+    <div class="workDiv">
+      создать заадчу:
+      <input type="text" id="taskInp" placeholder="задача" />
+      <button id="createButton">отправить</button>
+    </div>
+
+    <div class="workDiv">
+      изменить задачу:
+      <input type="text" id="idInp" placeholder="id изменяемой задачи" />
+      <input type="text" id="etaskInp" placeholder="задача" />
+      <select name="select" id="isCompletedSelect">
+        <option value="не выполнено" selected>не выполнено</option>
+        <option value="выполнено">выполнено</option>
+      </select>
+      <button id="changeButton">применить изменения</button>
+    </div>
+
+    <div class="workDiv">
+      удалить задачу:
+      <input type="text" id="delIdInp" placeholder="id задачи для удаления" />
+      <button id="delButton">удалить</button>
+    </div>
+  </body>
+</html>
