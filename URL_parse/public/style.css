@@ -1,0 +1,28 @@
+.main{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+.container{
+     display: block;
+     border: 1px solid blue; 
+     border-radius: 10px;
+     max-width: 300px;
+     min-width: 200px;
+     padding: 5px;
+     margin: 10px;
+}
+
+.filterDiv{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.sendButton{
+    visibility: visible;
+}
