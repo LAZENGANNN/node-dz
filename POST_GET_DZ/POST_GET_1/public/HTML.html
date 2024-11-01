@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="script.js"></script>
+    <title>calc</title>
+  </head>
+  <body>
+    <div class="inputDiv">
+      <input type="text" placeholder="1е число" id="input1" />
+      <select name="operation" id="opSelect">
+        <option value="+" selected>+</option>
+        <option value="-">-</option>
+        <option value="/">/</option>
+        <option value="*">*</option>
+      </select>
+      <input type="text" placeholder="2e число" id="input2" />
+    </div>
+    <div class="buttonsDiv">
+      <button id="GETbutton">отправить GET через строку</button>
+      <button id="POSTtextButton">отправить POST text</button>
+      <button id="POSTjsonButton">отправить POST json</button>
+    </div>
+    <div>
+      <input type="text" placeholder="результат" id="resultDiv" disabled />
+    </div>
+  </body>
+</html>
