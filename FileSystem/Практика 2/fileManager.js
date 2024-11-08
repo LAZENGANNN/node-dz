@@ -4,26 +4,42 @@ const { argv } = require("process");
 
 let argv2 = "";
 
-if (process.argv[2]) {
+if (process.argv.length >= 3) {
   argv2 = process.argv[2].toUpperCase();
 }
 
-// console.log(argv2)
+// 1. Команда DIR: отобразить список файлов и папок в текущем каталоге. 
+// При этом для каждого из отобразить дату создания, тип (папка/файл), название. Для
+
+// файлов отобразить размер в килобайтах.
+// Под конец отображения вывести кол-во файлов и папок, а также кол-во файлов отдельно. 
+// Также отобразите суммарный объём файлов в переданном каталоге.
+
 const filesInDir = fs.readdirSync(__dirname, "utf-8");
 switch (argv2) {
   case "DIR":
+    let filesCount = 0;
+    let dirsCount = 0;
+    let sizeSum = 0;
+
     filesInDir.map((f) => {
       const filepath = path.join(__dirname, f);
       const stat = fs.statSync(filepath);
 
       if (stat.isDirectory() === true) {
+        dirsCount++;
+        sizeSum += stat.size;
+
         console.log(`
     ----------------${filesInDir.indexOf(f)}----------------
-            name: ${f}
-            type: Directory
-            created at: ${stat.birthtime}
+        name: ${f}
+        type: Directory
+        created at: ${stat.birthtime}
             `);
       } else {
+        filesCount++;
+        sizeSum += stat.size;
+
         console.log(`
     ----------------${filesInDir.indexOf(f)}----------------
         name: ${f}
@@ -33,24 +49,44 @@ switch (argv2) {
         `);
       }
     });
+
+    console.log(`
+    -------------totally-------------
+    files and dirs: ${filesCount + dirsCount}
+    files: ${filesCount}
+    size: ~ ${sizeSum / 1000} kiloBytes
+    `);
     break;
 
+    // 2. DIRTO: сделать тоже самое, что и DIR, но результат сохранить в файл, 
+    // название которого передано в кач-ве аргумента при вызове через консоль.
+
   case "DIRTO":
-    let data = "";
+    let DIRTOdata = "";
+
+    let TfilesCount = 0;
+    let TdirsCount = 0;
+    let TsizeSum = 0;
 
     filesInDir.map((f) => {
       const filepath = path.join(__dirname, f);
       const stat = fs.statSync(filepath);
 
       if (stat.isDirectory() === true) {
-        data += `
+        TdirsCount++;
+        TsizeSum += stat.size;
+
+        DIRTOdata += `
     ----------------${filesInDir.indexOf(f)}----------------
         name: ${f}
         type: Directory
         created at: ${stat.birthtime}
             `;
       } else {
-        data += `
+        TfilesCount++;
+        TsizeSum += stat.size;
+
+        DIRTOdata += `
     ----------------${filesInDir.indexOf(f)}----------------
         name: ${f}
         type: File
@@ -60,28 +96,35 @@ switch (argv2) {
       }
     });
 
+    DIRTOdata += `
+    -------------totally-------------
+    files and dirs: ${TfilesCount + TdirsCount}
+    files: ${TfilesCount}
+    size: ~ ${TsizeSum / 1000} kiloBytes
+    `
+
     const writeName = argv[3];
     const writePath = path.join(__dirname, writeName);
-    fs.writeFileSync(writePath, data);
+    fs.writeFileSync(writePath, DIRTOdata);
     break;
 
-    case "COPY":
-        const path0 = path.join(argv[3])
-        const parsedPath0 = path.parse(path0)
+    // 4. Команда UNION: объеднить все текстовые файлы в один.
+    //  Передавать в кач-ве аругментов пути к файлам.
 
+  case "UNION":
+    //последним аргуметом передаётся назание файла, в который записывается результат
+    const pathList = argv.filter((el) => argv.indexOf(el) >= 3);
+    UNIONdata = "";
 
-        
-        
+    pathList.map((p) => {
+      if (pathList.indexOf(p) != pathList.length - 1) {
+        const readpath = path.join(p);
+        UNIONdata += fs.readFileSync(readpath, "utf-8");
+      }
+    });
 
-        // const readStream = fs.createReadStream(
-        //     path.join(__dirname, workdir, "./logo.png")
-        //   );
-        //   const writeStream = fs.createWriteStream(
-        //     path.join(__dirname, workdir, "./example13.jpg")
-        //   );
-        //   readStream.pipe(writeStream);
-        console.log(parsedPath0)
-
+    const UwritePath = path.join(__dirname, pathList[pathList.length - 1]);
+    fs.writeFileSync(UwritePath, UNIONdata);
 
     break;
 

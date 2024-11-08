@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
+// 2. Реализовать функцию, которая принимает файл с числами, перечисленными через пробел.
+// Затем суммирует все числа и возвращает результат.
+
 function task2(file) {
   let sum = 0;
   try {
@@ -67,6 +70,7 @@ async function task5(ex, isOut) {
         console.log(`${i + 1})${fileList[i]}`), "\n";
       }
     }
+    return filesInDir;
   } catch (e) {
     console.error("Ошибка:", e);
   }
