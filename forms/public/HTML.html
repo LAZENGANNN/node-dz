@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>FORMS</title>
+  </head>
+  <body>
+    <a href="/users/getAll"> all users</a>
+    <div class="forGrid">
+      <form id="createForm" action="/api/users/create" method="POST" class="c">
+        <div>
+          <input type="text" placeholder="login" name="login" required />
+        </div>
+        <div>
+          <input type="text" placeholder="password" name="password" required />
+        </div>
+
+        <div>
+          <button id="sendFormButton">отправить</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

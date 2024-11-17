@@ -1,0 +1,19 @@
+.forGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+}
+
+.c{
+    margin: 10px;
+    padding: 10px;
+    border: 1px red;
+    display: flex;
+    flex-direction: column;
+}
+
+.res{
+    overflow:scroll;
+    max-height: 900px;
+    border: 1px solid black;
+}
