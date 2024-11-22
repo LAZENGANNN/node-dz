@@ -3,7 +3,10 @@ const { createUser, authorisation, editUsers } = require("../controllers/usersCo
 
 const formidable = require("formidable")
 
-let form = new formidable.IncomingForm();
+let form = new formidable.IncomingForm({
+  keepExtensions: true,
+  uploadDir: "./img"
+});
 
 function POSTrouter(request, response) {
   const parsedURL = url.parse(request.url, true);

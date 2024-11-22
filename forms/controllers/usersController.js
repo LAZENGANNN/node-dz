@@ -1,10 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const formidable = require("formidable");
-
 const { renderData } = require("../utils/dataRenderer");
-const { getData, editData } = require("./dataController");
+const { getData, editData, getBanList } = require("./dataController");
 const { flattenObject } = require("../utils/flattenObject");
 
 function getAllUsers(request, response) {
@@ -36,11 +34,24 @@ function createUser(request, response, form) {
     }
 
     let data = getData();
-    data.push(flattenObject(userFields));
-    editData(data);
+    obj = flattenObject(userFields);
+    console.log(obj, userFields)
 
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    response.end(`<h1>user ${userFields.login} added</h1>`);
+    if (obj.password === obj.password2) {
+      const user = {
+        login: obj.login,
+        password: obj.password,
+        email: obj.email,
+      };
+      data.push(user);
+      editData(data);
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      response.end(`<h1>пользователь ${user.login} добавлен</h1>`);
+      
+    }else{
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      response.end(`<h1 style="color: red;">пароль не совпадает с повтором пароля. поаторите попытку</h1>`);
+    }
   });
 }
 
@@ -54,14 +65,14 @@ function authorisation(request, response, form) {
 
     let data = getData();
 
-    console.log(flattenObject(userFields));
-
     const user = data.find(
-      (el) => el.login === flattenObject(userFields).login
+      (el) =>
+        el.login === flattenObject(userFields).login &&
+        el.password === flattenObject(userFields).password
     );
+    console.log(user);
 
-    if (data.find((el) => el.login === flattenObject(userFields).login)) {
-      console.log(user);
+    if (user) {
       const authTemplate = fs.readFileSync(
         path.join(__dirname, "../templates/authPage.html"),
         "utf-8"
@@ -70,6 +81,19 @@ function authorisation(request, response, form) {
         path.join(__dirname, "../templates/templPage.html"),
         "utf-8"
       );
+
+      let banList = getBanList();
+      if (
+        banList.find(
+          (el) => el.login === user.login && el.password === user.password
+        )
+      ) {
+        response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        response.end(
+          `<h1 style="color: red;"> пользователь ${user.login} заблокирован</h1>`
+        );
+        return;
+      }
 
       const newData = renderData(user, authTemplate);
       const html = pageTemplate.replace("{{content}}", newData);
@@ -90,27 +114,30 @@ function editUsers(request, response, form) {
       return;
     }
     let data = getData();
-    const obj = flattenObject(userFields)
+    const obj = flattenObject(userFields);
 
-    console.log(obj);
-
-    // const user = data.find(
-    //   (el) => el.login === flattenObject(userFields).login
-    // );
-    console.log(obj.action, obj.action === "ban")
-    if (obj.action === "delete") {
-     let newdata = data.filter(el => el.login != obj.login && el.password != obj.password)
-      editData(newdata)
-
-    }
-    else if(obj.action === "ban"){
-      
+    if (obj.action === "delete" && data.find(el=> el.login === obj.login)) {
+      let newdata = data.filter(
+        (el) => el.login != obj.login && el.password != obj.password
+      );
+      editData(newdata);
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      response.end(`<h1>пользователь ${obj.login} удалён</h1>`);
+    } else if (obj.action === "ban" && data.find(el=> el.login === obj.login)) {
+      let banList = getBanList();
+      const user = data.find(
+        (el) => el.login === obj.login && el.password === el.password
+      );
+      banList.push(user);
+      editData(banList, "banList");
+      response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      response.end(`<h1>пользователь заблокирован</h1>`);
     } else {
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      response.end(`<h1>1</h1>`);
+      response.end(`<h1 style="color: red;" >пользователь не найден</h1>`);
     }
   });
-  };
+}
 
 module.exports = {
   getAllUsers,

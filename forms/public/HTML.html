@@ -10,7 +10,8 @@
   <body>
     <a href="/users/getAll"> all users</a>
     <div class="forGrid">
-      <form id="createForm" action="/api/users/create" method="POST" class="c">
+      РЕГИСТРАЦИЯ
+      <form id="createForm" action="/api/users/create" method="POST" class="c" enctype="multipart/form-data">
         <div>
           <input type="text" placeholder="login" name="login" required />
         </div>
@@ -18,7 +19,13 @@
           <input type="text" placeholder="password" name="password" required />
         </div>
         <div>
+          <input type="text" placeholder="repeat password" name="password2" required />
+        </div>
+        <div>
           <input type="email" placeholder="email" name="email" required />
+        </div>
+        <div>
+          <input type="file" name="photo"/>
         </div>
 
         <div>
@@ -28,6 +35,7 @@
     </div>
 
     <div class="forGrid">
+      АВТОРИЗАЦИЯ
       <form id="authForm" action="/api/users/auth" method="POST" class="c">
         <div>
           <input type="text" placeholder="login" name="login" required />
@@ -43,6 +51,7 @@
     </div>
 
     <div class="forGrid">
+      РЕДАКТИРОВАНИЕ
       <form id="editForm" action="/api/users/edit" method="POST" class="c">
         <div>
           <input type="text" placeholder="login" name="login" required />

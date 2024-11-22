@@ -1,7 +1,8 @@
 .forGrid{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     padding: 10px;
+    max-width: 300px;
 }
 
 .c{

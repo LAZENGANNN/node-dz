@@ -1,5 +1,8 @@
 [
   { "login": "user1", "password": "password111" },
-  { "login": "1234", "password": "1234" , "email": "1234"},
-  { "login": "123", "password": "123", "email": "zo7@gmail.com" }
+  { "login": "123", "password": "123", "email": "zo7@gmail.com" },
+  { "login": "1234", "password": "1234", "email": "1234@gmail.com" },
+  { "login": "qq1", "password": "qqq1", "email": "qqq@qq" },
+  { "login": "LAZENGANNN", "password": "12345", "email": "z7@gmail.com" },
+  { "login": "f1", "password": "f1", "email": "f1@d.com" }
 ]
