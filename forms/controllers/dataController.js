@@ -11,16 +11,17 @@ function getData() {
   }
 }
 
-// function editData(newData) {
-//   try {
-//     const filePath = path.join(__dirname, "../data/data.json");
-//     const data = JSON.stringify(newData);
-//     fs.writeFileSync(filePath, data);
-//   } catch (e) {
-//     console.error(e);
-//   }
-// }
+function editData(newData) {
+  try {
+    const filePath = path.join(__dirname, "../data/data.json");
+    const data = JSON.stringify(newData);
+    fs.writeFileSync(filePath, data);
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 module.exports = {
   getData,
+  editData,
 };

@@ -1,5 +1,5 @@
 const url = require("url");
-const { createUser } = require("../controllers/usersController");
+const { createUser, authorisation, editUsers } = require("../controllers/usersController");
 
 const formidable = require("formidable")
 
@@ -9,21 +9,16 @@ function POSTrouter(request, response) {
   const parsedURL = url.parse(request.url, true);
   switch (parsedURL.pathname) {
     case "/api/users/create":
-        
-
-        form.parse(request, (err, userFields)=>{
-            if (err) {
-                response.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
-                response.end(err.message);
-                return;
-              }
-            console.log(userFields);
-    
-            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-            response.end(`<h1>Пользователь добавлен</h1>`);
-            console.log("\n================================\n");
-        })
+        createUser(request, response, form)
       break;
+
+      case "/api/users/auth":
+        authorisation(request, response, form)
+        break;
+
+        case "/api/users/edit":
+          editUsers(request, response, form)
+          break;
     default:
       response.end("<h1>ошибка адреса POST запроса</h1>");
       break;

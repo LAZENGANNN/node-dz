@@ -17,11 +17,50 @@
         <div>
           <input type="text" placeholder="password" name="password" required />
         </div>
+        <div>
+          <input type="email" placeholder="email" name="email" required />
+        </div>
 
         <div>
           <button id="sendFormButton">отправить</button>
         </div>
       </form>
     </div>
+
+    <div class="forGrid">
+      <form id="authForm" action="/api/users/auth" method="POST" class="c">
+        <div>
+          <input type="text" placeholder="login" name="login" required />
+        </div>
+        <div>
+          <input type="text" placeholder="password" name="password" required />
+        </div>
+
+        <div>
+          <button id="sendFormButtonAuth">отправить</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="forGrid">
+      <form id="editForm" action="/api/users/edit" method="POST" class="c">
+        <div>
+          <input type="text" placeholder="login" name="login" required />
+        </div>
+        <div>
+          <input type="text" placeholder="password" name="password" required />
+        </div>
+
+        <select name="action" id="sel">
+          <option value="delete" selected>удалить</option>
+          <option value="ban" selected>заблокировать</option>
+        </select>
+
+        <div>
+          <button id="sendFormButtonEdit">отправить</button>
+        </div>
+      </form>
+    </div>
+
   </body>
 </html>

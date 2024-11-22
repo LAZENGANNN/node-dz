@@ -1,6 +1,5 @@
 [
-    {
-        "login": "user1",
-        "password": "password111"
-    }
+  { "login": "user1", "password": "password111" },
+  { "login": "1234", "password": "1234" , "email": "1234"},
+  { "login": "123", "password": "123", "email": "zo7@gmail.com" }
 ]
