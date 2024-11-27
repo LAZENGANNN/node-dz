@@ -1,5 +1,6 @@
 const renderData = function (obj, template) {
     const rendered = template
+        .replace("{{photo}}", obj.photo)
         .replace("{{login}}", obj.login)
         .replace("{{login}}", obj.login)
         .replace("{{login}}", obj.login)

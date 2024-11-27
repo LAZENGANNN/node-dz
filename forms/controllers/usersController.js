@@ -26,7 +26,7 @@ function getAllUsers(request, response) {
 }
 
 function createUser(request, response, form) {
-  form.parse(request, (err, userFields) => {
+  form.parse(request, (err, userFields, files) => {
     if (err) {
       response.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
       response.end(err.message);
@@ -35,22 +35,45 @@ function createUser(request, response, form) {
 
     let data = getData();
     obj = flattenObject(userFields);
-    console.log(obj, userFields)
 
+    ////работа с файлом/////
+
+    const file = files.photo[0];
+    console.log("original path:", file.filepath);
+
+    let newPath = path.join(
+      `D:/node-js/dz/forms/public/img`,
+      `${obj.login}-avatarPicture-${file.originalFilename}`
+    );
+
+    console.log("newpath: ", newPath);
+
+    fs.rename(file.filepath, newPath, (err) => {
+      if (err) {
+        console.error("Ошибка при сохранении файла:", err);
+      } else {
+        console.log("Файл успешно сохранен по пути: ", newPath);
+      }
+    });
+
+    //////////////
     if (obj.password === obj.password2) {
       const user = {
         login: obj.login,
         password: obj.password,
         email: obj.email,
+        photo: newPath,
       };
+
       data.push(user);
       editData(data);
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       response.end(`<h1>пользователь ${user.login} добавлен</h1>`);
-      
-    }else{
+    } else {
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      response.end(`<h1 style="color: red;">пароль не совпадает с повтором пароля. поаторите попытку</h1>`);
+      response.end(
+        `<h1 style="color: red;">пароль не совпадает с повтором пароля. поаторите попытку</h1>`
+      );
     }
   });
 }
@@ -116,14 +139,17 @@ function editUsers(request, response, form) {
     let data = getData();
     const obj = flattenObject(userFields);
 
-    if (obj.action === "delete" && data.find(el=> el.login === obj.login)) {
+    if (obj.action === "delete" && data.find((el) => el.login === obj.login)) {
       let newdata = data.filter(
         (el) => el.login != obj.login && el.password != obj.password
       );
       editData(newdata);
       response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       response.end(`<h1>пользователь ${obj.login} удалён</h1>`);
-    } else if (obj.action === "ban" && data.find(el=> el.login === obj.login)) {
+    } else if (
+      obj.action === "ban" &&
+      data.find((el) => el.login === obj.login)
+    ) {
       let banList = getBanList();
       const user = data.find(
         (el) => el.login === obj.login && el.password === el.password

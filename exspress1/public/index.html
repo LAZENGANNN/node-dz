@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetaStar</title>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div>
+      найти по фио
+      <input
+        type="text"
+        name="text"
+        id="input"
+        placeholder="введите ФИО студента (или его часть)"
+        style="width: 250px"
+      />
+      <button id="sendButton">найти</button>
+    </div>
+    <div>
+      найти лучшего
+      <select name="select" id="select">
+        <option value="gems">по кристаллам</option>
+        <option value="coins">по монеткам</option>
+      </select>
+      <button id="bestButton">найти</button>
+
+    </div>
+
+    <div id="resultDiv"></div>
+  </body>
+</html>
