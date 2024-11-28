@@ -12,11 +12,11 @@ const {
 } = require("./controllers/studentController");
 
 const app = express();
-const port = 7777;
+const port = 1111;
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => res.status(200).sendFile("index.html"));
+app.get("/", (req, res) => res.status(200).sendFile("1.html"));
 
 app.get("/api/student", (req, res) => {
   const toSend = getAllStudent();
